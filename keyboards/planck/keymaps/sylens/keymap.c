@@ -1,68 +1,52 @@
 #include QMK_KEYBOARD_H
 #include "common.h"
-#include "xtonhasvim.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_planck_grid(
             KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
             CTRL_ESC,KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    NAV_SCLN,KC_QUOT,
             KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-            MEH,     KC_LCTL, KC_LALT, FKEYS,   KC_LGUI, SYMBOL,  KC_SPC,  KC_ENT,  MEH,   KVM_SWT, COPYADDR,PASTE),
+            _______, _______, _______, KC_LGUI, FKEYS,   SYMBOL,  KC_SPC,  MEH_ENT, KC_LALT, _______, _______, _______),
 
-    // Every symbol required for coding and every-day use.
+    // Every symbol and number required for coding and every-day use.
     [_SYMBOL] = LAYOUT_planck_grid(
             KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
             KC_TILD, KC_LPRN, KC_RPRN, KC_HASH, KC_EQL,  KC_PERC, KC_CIRC, KC_MINS, KC_ASTR, KC_LCBR, KC_RCBR, KC_LBRC,
-            KC_PIPE, KC_EXLM, KC_AT,   KC_PLUS, KC_DLR,  KC_PIPE, KC_UNDS, KC_AMPR, KC_LT,   KC_GT,   KC_BSLS, KC_RBRC,
+            KC_PIPE, KC_EXLM, KC_AT,   KC_PLUS, KC_DLR,  KC_COLN, KC_UNDS, KC_AMPR, KC_LT,   KC_GT,   KC_BSLS, KC_RBRC,
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
 
     // Function keys, mouse emulation and less commonly used special keys.
     [_FKEYS] = LAYOUT_planck_grid(
-            _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, _______, KC_MS_U, _______, KC_WH_U, KC_DEL,
-            KC_LCTL, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______,
+            _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, _______, KC_MS_U, _______, _______, KC_DEL,
+            KC_LCTL, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, _______,
             _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  _______,
-            _______, _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, _______, _______, _______),
+            _______, _______, _______, _______, _______, _______, KC_ACL0, KC_BTN1, KC_BTN2, _______, _______, _______),
 
-     // Loosely vim-based cursor and document navigation keys.
+    // Loosely vim-based cursor and document navigation keys.
     // Accessed by holding semicolon.
+    // Acts as cmd for any unbound keys.
     [_NAV] = LAYOUT_planck_grid(
             _______, _______, _______, WORD_R,  _______, _______, _______, KC_PGUP, LINE_R,  LINE_L,  _______, _______,
             _______, _______, _______, KC_PGDN, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
             _______, _______, CUT,     COPY,    PASTE,   WORD_L,  _______, _______, _______, _______, _______, _______,
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
 
-
-    // Special macros accessible via MEH key (bottom-left corner key).
-   // Undefined keys will get the standard MEH modifiers added.
-    [_MEH] = LAYOUT_planck_grid(
-            _______, LOCK,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    // One-handed gaming layout.
+    // Left hand shifted one key further left than usual for WASD usage.
+    [_GAME] = LAYOUT_planck_grid(
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-            _______, _______, _______, _______, _______, _______, VIM_START,_______,_______, _______, CAP_IMG, CAP_MOV),
+            KC_LCTL, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_SCLN, _______,
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LOCK,
+            _______, KC_ESC,  _______, FKEYS,   KC_SPC,  _______, _______, _______, _______, _______, XBX_IMG, XBX_MOV),
 
     // Keyboard level commands.
     // Accessed via FKEY+SYMBOL keys.
     [_ADJUST] = LAYOUT_planck_grid(
-            _______, RGB_HUI, RGB_HUD, RGB_TOG, DM_REC1, _______, _______, _______, _______, _______, DM_PLY1, RESET,
-            _______, RGB_SAI, RGB_SAD, _______, _______, GAME,    _______, _______, _______, _______, _______, _______,
-            _______, _______, _______, KC_LOCK,VIM_START,_______, _______, _______, CK_TOGG, CK_UP,   CK_DOWN, _______,
-            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
-
-    // xtonhasvim compatibility layer. VIM_ prefixes probably not required, along with this layer.
-    [_VIM] = LAYOUT_planck_grid(
-            _______, _______, VIM_W,   VIM_E,   VIM_R,   _______, VIM_Y,   VIM_U,   VIM_I,     VIM_O,      VIM_P,   _______,
-            VIM_ESC, VIM_A,   VIM_S,   VIM_D,   _______, VIM_G,   VIM_H,   VIM_J,   VIM_K,     VIM_L,      _______, _______,
-            VIM_SHIFT,_______,VIM_X,   VIM_C,   VIM_V,   VIM_B,   _______, _______, VIM_COMMA, VIM_PERIOD, _______, _______,
-            _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______,    _______, _______),
-
-    // xtonhasvim compatibility layer. Probably not required with some refactoring.
-    [_VINSERT] = LAYOUT_planck_grid(
-            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-            VIM_ESC, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)
+            MD_CODE, RGB_HUI, RGB_HUD, RGB_TOG, DM_REC1, _______, _______, _______, _______, _______, _______, _______,
+            LOCK,    RGB_SAI, RGB_SAD, _______, DM_PLY1, GAME,    _______, _______, _______, CAP_LST, CAP_IMG, CAP_MOV,
+            RESET,   _______, _______, KC_LOCK, _______, _______, _______, _______, _______, KVM_SWT, COPYADDR,PASTE,
+            _______, _______, _______, _______, _______, _______, EMOJI,   _______, _______, _______, _______, _______),
 };
-
 
 // track the time of the last key input.
 static uint16_t last_key_time;
@@ -98,11 +82,6 @@ static int game_target = -1;
 // 2+ - consumed by special case
 static int symbol_consumed;
 
-// 0  - not consumed
-// 1  - consumed by lgui
-// 2+ - consumed by del word
-static int del_word_consumed;
-
 // track the state of KC_LSFT
 // 0 - not activated
 // 1 - down, not consumed
@@ -124,6 +103,11 @@ static int backtick_surround_state;
 static bool last_was_number;
 
 static bool last_was_alpha;
+
+// number of vim movement keys pressed in a row.
+static int vim_movement;
+
+static bool vim_insert;
 
 // sounds
 float song_kvm_setting[][2] = SONG(S__NOTE(_C5),S__NOTE(_C6),S__NOTE(_C7));
@@ -202,6 +186,9 @@ void backtick_begin(void)
     if (backtick_surround_state != 0)
         return;
 
+    // undo early register in lsft state 1.
+    unregister_code(KC_LSFT);
+
     // begin backtick surround sequence.
     tap_code16(KC_GRV);
     tap_code16(KC_GRV);
@@ -244,43 +231,16 @@ bool process_backtick_surround(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case KC_ENT:
+        case MEH_ENT:
             // exit via enter
             backtick_commit();
+            meh_activated = 3;
             return false;
 
         default:
             // or consume on any other key
             backtick_surround_state = 2;
             break;
-    }
-
-    return true;
-}
-
-bool process_del_word(uint16_t keycode, keyrecord_t *record) {
-    if (keycode != KC_LGUI)
-        return true;
-
-    // Pressing the FKEY key without another key will backspace one word (opt-backspace).
-    if (record->event.pressed)
-    {
-        if ((last_key_code == KC_LGUI || last_was_alpha) && timer_elapsed(last_key_time) < 600)
-        {
-            del_word_consumed = 2;
-            SEND_STRING(SS_LALT(SS_TAP(X_BSPC)));
-        }
-        else
-            del_word_consumed = 1;
-    }
-    else
-    {
-        if (del_word_consumed == 1 && last_key_code == KC_LGUI && timer_elapsed(last_key_time) < 300)
-        {
-            unregister_code(KC_LGUI);
-            SEND_STRING(SS_LALT(SS_TAP(X_BSPC)));
-        }
-
-        del_word_consumed = 0;
     }
 
     return true;
@@ -300,7 +260,10 @@ bool process_symbol_specials(uint16_t keycode, keyrecord_t *record) {
             layer_off(_SYMBOL);
 
             if (symbol_consumed == 3)
+            {
                 unregister_code(KC_PGUP);
+                unregister_code(KC_LALT);
+            }
         }
 
         return true;
@@ -321,6 +284,9 @@ bool process_symbol_specials(uint16_t keycode, keyrecord_t *record) {
                     register_code(KC_PGUP);
                     symbol_consumed = 3;
                     return false;
+                case KC_BSPC:
+                    register_code(KC_LALT);
+                    symbol_consumed = 3;
             }
         }
 
@@ -346,75 +312,71 @@ bool process_symbol_specials(uint16_t keycode, keyrecord_t *record) {
         switch (keycode) {
             case KC_SPC:
                 if (symbol_consumed == 3)
+                {
                     unregister_code(KC_PGUP);
+                    unregister_code(KC_LALT);
+                }
                 return true;
         }
     }
 
-return true;
-}
-
-void deactivate_meh(void) {
-    if (meh_activated == 0)
-        return;
-
-    unregister_code(KC_LCTL);
-    unregister_code(KC_LSFT);
-    unregister_code(KC_LALT);
-    layer_off(_MEH);
-
-    if (meh_activated == 1)
-        SEND_STRING(SS_LGUI(SS_TAP(X_C)));
-
-    meh_activated = 0;
+    return true;
 }
 
 bool process_meh(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case MEH:
-        case RMEH:
+        case MEH_ENT:
             if (record->event.pressed) {
-                meh_activated = 1;
-                layer_move(_MEH);
+                if (timer_elapsed(last_key_time) < 200 || get_highest_layer(layer_state) != _BASE)
+                {
+                    register_code(KC_ENT);
+                    meh_activated = 3;
+                }
+                else
+                {
+                    meh_activated = 1;
+                }
             }
             else
-                deactivate_meh();
-
-            return false;
-        case KC_TAB:
-            if (record->event.pressed && meh_activated == 1)
             {
-                SEND_STRING("```csharp" SS_LSFT(SS_TAP(X_ENT)) SS_LSFT(SS_TAP(X_ENT)) "```");
-                SEND_STRING(SS_TAP(X_UP));
-                return false;
+                switch (meh_activated)
+                {
+                    case 1:
+                        tap_code16(KC_ENT);
+                        break;
+
+                    case 2:
+                        unregister_code(KC_LCTL);
+                        unregister_code(KC_LSFT);
+                        unregister_code(KC_LALT);
+                        break;
+
+                    case 3:
+                        unregister_code(KC_ENT);
+                        break;
+                }
+
+                meh_activated = 0;
             }
-            break;
+            return true;
 
         default:
-            if (record->event.pressed && meh_activated == 1)
+            if (!record->event.pressed)
+                break;
+
+            switch (meh_activated)
             {
-                register_code(KC_LCTL);
-                register_code(KC_LSFT);
-                register_code(KC_LALT);
-                meh_activated = 2;
+                case 1:
+                case 3:
+                    unregister_code(KC_ENT);
+                    register_code(KC_LCTL);
+                    register_code(KC_LSFT);
+                    register_code(KC_LALT);
+                    meh_activated = 2;
+                    break;
             }
 
             break;
-        case CAP_MOV:
-        case CAP_IMG:
-            // don't want these to trigger the down codes of MEH.
-            // bit ugly to have this here; probably need to rethink this logic.
-            meh_activated = 2;
-            break;
-        case LOCK:
-            if (record->event.pressed) {
-                // lock windows
-                SEND_STRING(SS_LGUI(SS_TAP(X_L)));
-                // lock macOS and turn off screen
-                SEND_STRING(SS_LCTL(SS_LGUI(SS_TAP(X_Q))));
-            }
-            meh_activated = 2;
-            return false;
     }
 
     return true;
@@ -440,7 +402,21 @@ bool process_ctrl_esc(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case CTRL_ESC:
             if (record->event.pressed) {
-                if (timer_elapsed(last_key_time) < 250)
+                // okay this is getting a bit silly so you might ask "why not just split out into separate keys"
+                // well i'm not ready to do that yet, and the remaining complexity i'm adding here is to handle
+                // very edge cases.
+
+                // only immediate escape if the last keypress was quite recent..
+                if (timer_elapsed(last_key_time) < 200
+                        // ..and no modifiers are held..
+                        && get_mods() == 0
+                        // ..and either the last key was CTRL_ESC (two pressed in fast succession)..
+                        && (last_key_code == CTRL_ESC
+                        // ..or we are pretty sure that we're performing a vim normal move return.
+                        // - we haven't been 'jk'-ing for too long in a row
+                        // - we pressed 'i' more recently than 'esc'
+                        || (vim_movement < 2 && vim_insert))
+                   )
                 {
                     register_code(KC_ESC);
                     ctrl_escape_activated = 1;
@@ -461,29 +437,25 @@ bool process_ctrl_esc(uint16_t keycode, keyrecord_t *record) {
                     tap_code16(KC_ESC);
                 }
 
-                if (ctrl_escape_activated < 3)
-                {
-                    if (IS_LAYER_ON(_VINSERT))
-                        layer_move(_VIM);
-                }
-
                 ctrl_escape_activated = 0;
             }
 
             return true;
         default:
-            switch (ctrl_escape_activated)
-            {
-                case 1:
-                    // ctrl combo capture.
-                    unregister_code(KC_ESC);
-                    register_code(KC_LCTL);
-                    ctrl_escape_activated = 3;
-                    break;
-                case 2:
-                    // consumption.
-                    ctrl_escape_activated = 3;
-                    break;
+            if (record->event.pressed) {
+                switch (ctrl_escape_activated)
+                {
+                    case 1:
+                        // ctrl combo capture.
+                        unregister_code(KC_ESC);
+                        // register_code(KC_LCTL);
+                        ctrl_escape_activated = 3;
+                        break;
+                    case 2:
+                        // consumption.
+                        ctrl_escape_activated = 3;
+                        break;
+                }
             }
             break;
     }
@@ -514,7 +486,7 @@ bool process_nav_scln(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // timer case here is just to give more immediacy to semicolons when typing at EOL.
                 // set low enough to not impede intended navigation
-                if (get_mods() & MOD_BIT(KC_LSFT) || (get_mods() == 0 && timer_elapsed(last_key_time) < 150 && last_key_code != CTRL_ESC))
+                if (get_mods() & MOD_BIT(KC_LSFT) || (get_mods() == 0 && timer_elapsed(last_key_time) < 100 && last_key_code != CTRL_ESC))
                 {
                     register_code16(KC_SCLN);
                     semicolon_nav_activated = 2;
@@ -584,6 +556,8 @@ bool process_nav_scln(uint16_t keycode, keyrecord_t *record) {
 
                 tap_code16(KC_TAB);
                 semicolon_nav_activated = 3;
+                // don't fire escape after usage. has to be handled here due to the blocking return.
+                ctrl_escape_activated = 3;
                 return false;
             }
             else
@@ -643,12 +617,13 @@ bool process_left_shift(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
 
+            // TODO: next line may break: block this because it handles weird on iOS (left shift release also releases right shift MAKING_this-happen)
+            register_code(KC_LSFT);
             lsft_state = 1;
 
             if (rsft_state == 1)
                 backtick_begin();
 
-            // block this because it handles weird on iOS (left shift release also releases right shift MAKING_this-happen)
             return false;
         }
         else
@@ -670,7 +645,7 @@ bool process_right_shift(uint16_t keycode, keyrecord_t *record) {
     {
         if (record->event.pressed)
         {
-            if (get_mods() & MOD_BIT(KC_LSFT) || (last_key_code == KC_RSFT && timer_elapsed(last_key_time) < 250))
+            if (lsft_state == 2 || (last_key_code == KC_RSFT && timer_elapsed(last_key_time) < 250))
             {
                 tap_code16(KC_MINS);
                 rsft_state = 2;
@@ -713,6 +688,18 @@ bool process_macros(uint16_t keycode, keyrecord_t *record) {
             tap_code16(KC_ESC);
             return false;
 
+        case LOCK:
+            // lock windows
+            SEND_STRING(SS_LGUI(SS_TAP(X_L)));
+            // lock macOS and turn off screen
+            SEND_STRING(SS_LCTL(SS_LGUI(SS_TAP(X_Q))));
+            return false;
+
+        case MD_CODE:
+            SEND_STRING("```csharp" SS_LSFT(SS_TAP(X_ENT)) SS_LSFT(SS_TAP(X_ENT)) "```");
+            SEND_STRING(SS_TAP(X_UP));
+            return false;
+
         case KVM_SWT:
             if (get_mods() & MOD_BIT(KC_LCTL))
             {
@@ -735,26 +722,9 @@ bool process_macros(uint16_t keycode, keyrecord_t *record) {
             set_game_mode(IS_GAME, false);
             return false;
 
-        case KC_W:
-            // todo: move to vim implementation
-            if (IS_LAYER_ON(_VINSERT)) {
-                if (get_mods() & MOD_BIT(KC_LCTL) && (get_mods() & MOD_BIT(KC_LALT)) == 0)
-                {
-                    unregister_code(KC_LCTL);
-
-                    register_code(KC_LALT);
-                    tap_code16(KC_BSPC);
-                    unregister_code(KC_LALT);
-
-                    register_code(KC_LCTL);
-                    return false;
-                }
-            }
-            break;
-
         case KC_BSPC:
             // ctrl-backspace maps to opt-backspace
-            if (get_mods() & MOD_BIT(KC_LCTL))
+            if (get_mods() == MOD_BIT(KC_LCTL))
             {
                 uint8_t mod_state = get_mods();
                 clear_mods();
@@ -775,6 +745,34 @@ bool process_macros(uint16_t keycode, keyrecord_t *record) {
 void update_last_was_number(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed)
     {
+        last_was_number = false;
+        last_was_alpha = false;
+
+        // handle vim movement tracking
+        switch (keycode) {
+            case KC_H:
+            case KC_J:
+            case KC_K:
+            case KC_L:
+                last_was_alpha = true;
+                vim_movement++;
+                return;
+        }
+
+        vim_movement = 0;
+
+        switch (keycode) {
+            case KC_I:
+            case KC_O:
+            case KC_A:
+                vim_insert = true;
+                break;
+            case KC_ESC:
+            case CTRL_ESC:
+                vim_insert = false;
+                break;
+        }
+
         switch (keycode) {
             case KC_1:
             case KC_2:
@@ -787,11 +785,14 @@ void update_last_was_number(uint16_t keycode, keyrecord_t *record) {
             case KC_9:
             case KC_0:
                 last_was_number = true;
-                last_was_alpha = false;
+                break;
+            // not really "alpha" keys but counted as such for usages.
+            case NAV_SCLN:
+            case KC_SCLN:
+                last_was_alpha = true;
                 break;
             default:
                 // todo: handle/allow shift as a modifier
-                last_was_number = false;
                 last_was_alpha = get_mods() == 0 && (keycode >= KC_A && keycode < KC_0);
                 break;
         }
@@ -799,10 +800,6 @@ void update_last_was_number(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool process_all_custom(uint16_t keycode, keyrecord_t *record) {
-    if (!process_meh(keycode, record)) return false;
-
-    if (!process_macros(keycode, record)) return false;
-
     if (!process_symbol_specials(keycode, record)) return false;
 
     if (!process_game_specials(keycode, record)) return false;
@@ -810,21 +807,26 @@ bool process_all_custom(uint16_t keycode, keyrecord_t *record) {
     // in game mode, all excess processing is skipped (mainly to avoid unwanted macro / helper triggers).
     if (!(IS_GAME))
     {
-        if (!process_del_word(keycode, record)) return false;
-
         // delay shift down presses until next key.
         if (!process_left_shift(keycode, record)) return false;
         if (!process_right_shift(keycode, record)) return false;
-        if (!process_backtick_surround(keycode, record)) return false;
 
         if (!process_nav_scln(keycode, record)) return false;
-        if (!process_record_vimlayer(keycode, record)) return false;
+
+        if (!process_backtick_surround(keycode, record)) return false;
+
+        if (!process_meh(keycode, record)) return false;
+
+        if (!process_macros(keycode, record)) return false;
+
         if (!process_ctrl_esc(keycode, record)) return false;
     }
 
     return true;
 }
 
+// For debounce and edge case purposes, track the last key timing, key code,
+// and whether it was a numeric character or not.
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     bool retval = process_all_custom(keycode, record);
@@ -839,8 +841,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return retval;
 }
 
+// When holding both SYMBOL and FKEYS, the ADJUST layer will be accessible.
 layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, _SYMBOL, _FKEYS, _ADJUST);
-
-    return state;
+    return update_tri_layer_state(state, _SYMBOL, _FKEYS, _ADJUST);
 }
